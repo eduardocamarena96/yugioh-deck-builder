@@ -1,0 +1,244 @@
+/* Targets the scrollbar track */
+::-webkit-scrollbar {
+    width: 16px; /* Width of the scrollbar */
+}
+
+/* Targets the thumb (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+    background-color: #1E1E27; /* Thumb color */
+    border-radius: 8px; /* Makes it rounded */
+    border: 1px solid hsla(0, 0%, 100%, 0.1); /* Adds a border to make the thumb smaller */ 
+}
+
+/* Targets the scrollbar track (the area behind the thumb) */
+::-webkit-scrollbar-track {
+    /* background-color: white; */
+     /* Track background color */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(240, 13%, 10%); /* Track color when hovered */
+}
+
+body {
+    background-color: #0E0E11;
+    color: white;
+    font-family: "Inter", sans-serif;
+}
+
+#root {
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    height: 6.4rem;
+    padding: 0 3.2rem 0 3.2rem;
+    flex-shrink: 0; 
+}
+
+.header__title {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.header__navigation-link {
+    font-size: 1.6rem;
+    opacity: 0.5;
+}
+
+.header__navigation-link--highlight {
+    opacity: 1;
+}
+
+.edit-deck-container {
+    display: flex;
+    height: 100%;
+}
+
+.search-cards-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 1.6rem;
+    padding: 1.6rem;
+    border-top: 1px solid #262631;
+    border-right: 1px solid #262631;
+}
+
+.search-bar {
+    position: relative;
+    display: flex;
+    height: 64px;
+    flex-shrink: 0;
+    margin: 0 8px 0 8px;
+}
+
+.search-bar__input {
+    width: 100%;
+    padding: 0 48px 0 56px;
+    font-size: 28px;
+    border-radius: 8px;
+    border: 1px solid hsla(0, 0%, 15%, 0.2);
+    background-color: #1E1E27;
+    color: white;
+}
+
+.search-bar__input:focus {
+    outline: 2px solid hsla(0, 0%, 100%, 0.4);
+}
+
+.search-bar__input::placeholder {
+    color: hsla(0, 0%, 100%, 0.4);
+}
+
+.search-bar__search-icon {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    height: 28px;
+    width: 28px;
+}
+
+.search-bar__search-icon path, .search-bar__cancel-icon path {
+    stroke: hsla(0, 0%, 100%, 0.4);
+}
+
+.search-bar__cancel-icon {
+    position: absolute;
+    top: 24px;
+    right: 16px;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(192px, 1fr));
+    /* gap: 1.6rem;  */
+    grid-column-gap: 1.6rem;
+    flex: 1;
+    padding: 1.6rem 3.2rem;
+    user-select: none;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.cards-container--small {
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    grid-gap: 0.8rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    /* gap: 0.8rem; */
+}
+
+.add-or-remove-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.6rem 0;
+}
+
+.cards-added-text {
+    font-size: 2rem;
+}
+
+.circle-subtract-svg, .circle-add-svg {
+     width: 3.2rem;
+     height: 3.2rem;
+     cursor: pointer;
+}
+
+.circle-subtract-svg path, .circle-add-svg path {
+    stroke: white;
+}
+
+.disable-button {
+    opacity: 0.5;
+}
+
+
+/* Right Side */
+
+.save-cards-container {
+    flex: 1;
+    border-top: 1px solid #262631;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    padding: 1.6rem;
+    overflow: scroll;
+    /* overflow: hidden; */
+}
+
+.deck-editing-options-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.deck-editing-options-container__deck-name {
+    font-size: 2.4rem;
+    opacity: 0.8;
+}
+
+.deck-editing-buttons {
+    display: flex;
+    gap: 1rem ;
+}
+
+.deck-editing-buttons button {
+    width: 8rem;
+    height: 4rem;
+    font-size: 2rem;
+    border-radius: 4px;
+    background-color: #0E0E11;
+    color: white;
+    border: 1px solid #262631;
+    cursor: pointer;
+}
+
+.deck-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.deck-type-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.6rem;
+    width: 100%;
+    height: 6.4rem;
+    border: 1px solid #262631;
+    font-size: 2.4rem;
+    border-radius: 8px;
+}
+
+.deck-type-header__deck-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    /* padding: 0.4rem; */
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 4px;
+    font-size: 1.8rem;
+    background-color: #1E1E27;
+}
+
+
+.deck-type-header__card-type-count {
+    opacity: 0.5;
+}
