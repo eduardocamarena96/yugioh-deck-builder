@@ -10,12 +10,6 @@
     border: 1px solid hsla(0, 0%, 100%, 0.1); /* Adds a border to make the thumb smaller */ 
 }
 
-/* Targets the scrollbar track (the area behind the thumb) */
-::-webkit-scrollbar-track {
-    /* background-color: white; */
-     /* Track background color */
-}
-
 ::-webkit-scrollbar-thumb:hover {
     background-color: hsl(240, 13%, 10%); /* Track color when hovered */
 }
@@ -118,7 +112,6 @@ body {
 .cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(192px, 1fr));
-    /* gap: 1.6rem;  */
     grid-column-gap: 1.6rem;
     flex: 1;
     padding: 1.6rem 3.2rem;
@@ -138,8 +131,10 @@ body {
     display: flex;
     flex-direction: column;
     width: fit-content;
-    /* cursor: pointer; */
-    /* gap: 0.8rem; */
+}
+
+.card img {
+    cursor: pointer;
 }
 
 .card-overlay__button {
@@ -192,7 +187,6 @@ body {
     gap: 1.6rem;
     padding: 1.6rem;
     overflow: scroll;
-    /* overflow: hidden; */
 }
 
 .deck-editing-options-container {
@@ -245,7 +239,6 @@ body {
     justify-content: center;
     align-items: center;
     background-color: red;
-    /* padding: 0.4rem; */
     width: 3.2rem;
     height: 3.2rem;
     border-radius: 4px;
@@ -257,3 +250,49 @@ body {
 .deck-type-header__card-type-count {
     opacity: 0.5;
 }
+
+/* Tooltip */
+
+.tooltip {
+    visibility: hidden;
+    width: 300px;
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    border-radius: 8px;
+    padding: 10px;
+    position: absolute;
+    top: 10%;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, left 0.3s ease-in-out, right 0.3s ease-in-out;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card img:hover + .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  /* Tooltip positioned to the right of the card */
+.tooltip.right {
+    left: 105%; 
+    right: auto; 
+  }
+  
+  /* Tooltip positioned to the left of the card */
+  .tooltip.left {
+    right: 105%; 
+    left: auto; 
+  }
+  
+  .tooltip h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #ffdd57; 
+  }
+  
+  .tooltip p {
+    font-size: 14px;
+    margin: 5px 0;
+  }

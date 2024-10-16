@@ -95,9 +95,10 @@ function RemoveIcon({ cardCount, removeCard }) {
     );
   }
   
-  function CancelIcon() {
+  function CancelIcon({clearInput}) {
     return (
       <svg
+        onClick={clearInput}
         className="search-bar__cancel-icon"
         width="16"
         height="16"
