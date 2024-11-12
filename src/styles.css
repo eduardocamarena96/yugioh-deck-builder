@@ -22,6 +22,7 @@ body {
 
 #root {
   height: 100%;
+  /* overflow: hidden; */
 }
 
 .header {
@@ -49,7 +50,7 @@ body {
 
 .edit-deck-container {
   display: flex;
-  height: 100%;
+  height: calc(100% - 6.4rem);
 }
 
 .search-cards-container {
@@ -60,6 +61,7 @@ body {
   padding: 1.6rem;
   border-top: 1px solid #262631;
   border-right: 1px solid #262631;
+  padding-bottom: 0;
 }
 
 .search-bar {
@@ -110,6 +112,8 @@ body {
   cursor: pointer;
 }
 
+
+
 .cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(192px, 1fr));
@@ -121,6 +125,7 @@ body {
 }
 
 .cards-container--small {
+  max-height: 41rem;
   width: 100%;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   grid-gap: 0.8rem;
@@ -195,6 +200,7 @@ body {
   flex-direction: column;
   gap: 1.6rem;
   padding: 1.6rem;
+  overflow-y: scroll;
 }
 
 .deck-editing-options-container {
@@ -407,4 +413,9 @@ body {
 
 .cards-container__search-page {
   grid-gap: 1.6rem;
+}
+
+/* Toast styles */
+.Toastify__toast-theme--dark {
+  background-color: #262631;
 }

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import DeckListDropdown from "./DeckListDropdown";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function DeckEditingOptions({ deck, setDeck }) {
   const [deckNameInput, setDeckNameInput] = useState(deck.name);
@@ -16,39 +18,46 @@ export default function DeckEditingOptions({ deck, setDeck }) {
         body: JSON.stringify({ deckName: deckName, deck: deck }),
       });
 
+      if (!response.ok) {
+        toast.error("Failed to save the deck. Please try again.");
+        return;
+      }
+
       const data = await response.json();
       setToggle((prev) => !prev);
       console.log("Cards added:", data);
+      toast.success("Deck saved successfully!");
     } catch (error) {
       console.error("Error adding cards:", error);
+      toast.error("Failed to save the deck. Please try again.");
     }
   }
 
-  async function updateCards(deckName, deck) {
-    try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/decks/name/${deckName}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: deckName,
-            main: deck.main,
-            extra: deck.extra,
-            side: deck.side,
-          }),
-        }
-      );
+  // async function updateCards(deckName, deck) {
+  //   try {
+  //     const response = await fetch(
+  //       `http://127.0.0.1:8000/decks/name/${deckName}`,
+  //       {
+  //         method: "PATCH",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           name: deckName,
+  //           main: deck.main,
+  //           extra: deck.extra,
+  //           side: deck.side,
+  //         }),
+  //       }
+  //     );
 
-      const data = await response.json();
-      setToggle((prev) => !prev);
-      console.log("Cards updated:", data);
-    } catch (error) {
-      console.error("Error adding cards:", error);
-    }
-  }
+  //     const data = await response.json();
+  //     setToggle((prev) => !prev);
+  //     console.log("Cards updated:", data);
+  //   } catch (error) {
+  //     console.error("Error adding cards:", error);
+  //   }
+  // }
 
   async function deleteDeck(deckName) {
     try {
@@ -61,15 +70,18 @@ export default function DeckEditingOptions({ deck, setDeck }) {
 
       if (response.ok) {
         console.log("Deck deleted successfully");
+        toast.success("Deck deleted successfully!");
         // Handle the UI or state updates after successful deletion
         setDeck({ name: "", main: [], extra: [], side: [] });
         setDeckNameInput("");
         setToggle((prev) => !prev);
       } else {
         console.error("Failed to delete deck");
+        toast.error("Failed to delete deck. Please try again.");
       }
     } catch (error) {
       console.error("Error deleting deck:", error);
+      toast.error("Failed to delete deck. Please try again.");
     }
   }
 
@@ -98,11 +110,8 @@ export default function DeckEditingOptions({ deck, setDeck }) {
           toggle={toggle}
           deckName={deckNameInput}
         />
-        <button onClick={() => deleteDeck(deckNameInput)}>Delete</button>
-        <button className="deck-editing-buttons__undo">Undo</button>
-        <button>Redo</button>
-        <button onClick={() => addCards(deckNameInput, deck)}>Save</button>
-        <button onClick={() => updateCards(deckNameInput, deck)}>Update</button>
+        {/* <button className="deck-editing-buttons__undo">Undo</button>
+        <button>Redo</button> */}
         <button
           onClick={() => {
             setDeck({ name: "", main: [], extra: [], side: [] });
@@ -110,6 +119,14 @@ export default function DeckEditingOptions({ deck, setDeck }) {
         >
           Clear
         </button>
+        <button onClick={() => deleteDeck(deckNameInput)}>Delete</button>
+        <button onClick={() => addCards(deckNameInput, deck)}>Save</button>
+        <ToastContainer
+          stacked
+          position="top-right"
+          theme="dark"
+          autoClose={2000}
+        />
       </div>
     </div>
   );
