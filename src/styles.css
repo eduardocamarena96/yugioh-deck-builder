@@ -138,6 +138,13 @@ body {
   transition: transform 0.2s ease-in-out;
 }
 
+.card img:hover {
+    /* box-shadow: 0 0 8px 2px #c4c4c6; */
+    box-shadow: 0px 0px 4px 4px #FDA802;
+    /* box-shadow: 0px 0px 4px 4px #c4c4c6; */
+
+}
+
 .card-overlay__button {
   position: absolute;
   bottom: 0.1rem;

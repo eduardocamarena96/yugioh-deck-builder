@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
@@ -17,6 +17,7 @@ export default function EditDeckPage() {
   });
 
   const [input, setInput] = useState("");
+  const cardsContainerRef = useRef(null);
 
   console.log(deck);
 
@@ -103,12 +104,13 @@ export default function EditDeckPage() {
             clearInput={clearInput}
           />
 
-          <div className="cards-container">
+          <div ref={cardsContainerRef} className="cards-container">
             <TopCards
               deck={deck}
               addCard={addCard}
               removeCard={removeCard}
               input={input}
+              cardsContainerRef={cardsContainerRef}
             />
           </div>
         </section>
