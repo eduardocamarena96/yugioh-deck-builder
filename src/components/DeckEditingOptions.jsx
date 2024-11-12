@@ -3,7 +3,52 @@ import DeckListDropdown from "./DeckListDropdown";
 
 export default function DeckEditingOptions({ deck, setDeck }) {
   const [deckNameInput, setDeckNameInput] = useState(deck.name);
+  const [toggle, setToggle] = useState(false);
   console.log(deckNameInput);
+
+  async function addCards(deckName, deck) {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/cards", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ deckName: deckName, deck: deck }),
+      });
+
+      const data = await response.json();
+      setToggle((prev) => !prev);
+      console.log("Cards added:", data);
+    } catch (error) {
+      console.error("Error adding cards:", error);
+    }
+  }
+
+  async function updateCards(deckName, deck) {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/decks/name/${deckName}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: deckName,
+            main: deck.main,
+            extra: deck.extra,
+            side: deck.side,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      setToggle((prev) => !prev);
+      console.log("Cards updated:", data);
+    } catch (error) {
+      console.error("Error adding cards:", error);
+    }
+  }
 
   async function deleteDeck(deckName) {
     try {
@@ -17,6 +62,9 @@ export default function DeckEditingOptions({ deck, setDeck }) {
       if (response.ok) {
         console.log("Deck deleted successfully");
         // Handle the UI or state updates after successful deletion
+        setDeck({ name: "", main: [], extra: [], side: [] });
+        setDeckNameInput("");
+        setToggle((prev) => !prev);
       } else {
         console.error("Failed to delete deck");
       }
@@ -47,14 +95,17 @@ export default function DeckEditingOptions({ deck, setDeck }) {
         <DeckListDropdown
           setDeck={setDeck}
           setDeckNameInput={setDeckNameInput}
+          toggle={toggle}
+          deckName={deckNameInput}
         />
         <button onClick={() => deleteDeck(deckNameInput)}>Delete</button>
         <button className="deck-editing-buttons__undo">Undo</button>
         <button>Redo</button>
         <button onClick={() => addCards(deckNameInput, deck)}>Save</button>
+        <button onClick={() => updateCards(deckNameInput, deck)}>Update</button>
         <button
           onClick={() => {
-            setDeck({ name: "Untitled", main: [], extra: [], side: [] });
+            setDeck({ name: "", main: [], extra: [], side: [] });
           }}
         >
           Clear
@@ -62,21 +113,4 @@ export default function DeckEditingOptions({ deck, setDeck }) {
       </div>
     </div>
   );
-}
-
-async function addCards(deckName, cards) {
-  try {
-    const response = await fetch("http://127.0.0.1:8000/cards", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ deckName: deckName, cards: cards }),
-    });
-
-    const data = await response.json();
-    console.log("Cards added:", data);
-  } catch (error) {
-    console.error("Error adding cards:", error);
-  }
 }

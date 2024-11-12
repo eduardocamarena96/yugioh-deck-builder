@@ -8,9 +8,8 @@ import DeckEditingOptions from "../components/DeckEditingOptions";
 import getDeckType from "../helpers/get-deck-type-helper";
 
 export default function EditDeckPage() {
-
   const [deck, setDeck] = useState({
-    name: "Untitled",
+    name: "",
     main: [],
     extra: [],
     side: [],
@@ -20,21 +19,6 @@ export default function EditDeckPage() {
   const cardsContainerRef = useRef(null);
 
   console.log(deck);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch("http://127.0.0.1:8000/cards");
-        const data = await response.json();
-        console.log(data);
-        if (data.length !== 0) setDeck(data[0].cards);
-      } catch (error) {
-        console.error("Error fetching deck data:", error);
-      }
-    }
-
-    fetchData();
-  }, []);
 
   function handleSetInput(event) {
     setInput(event.target.value);

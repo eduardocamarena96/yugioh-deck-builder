@@ -1,12 +1,23 @@
 import { useState, useEffect } from "react";
 
-export default function DeckListDropdown({ setDeck, setDeckNameInput }) {
+export default function DeckListDropdown({
+  setDeck,
+  setDeckNameInput,
+  toggle,
+  deckName,
+}) {
   const [decksList, setDecksList] = useState(["one", "two", "three"]);
   const [dropdownValue, setDropdownValue] = useState("select-deck");
 
   function changeDropdownValue(event) {
     const deckName = event.target.value;
     setDropdownValue(deckName);
+    if (deckName === "select-deck") {
+      setDeckNameInput("");
+      setDeck({ name: "", main: [], extra: [], side: [] });
+      return;
+    }
+
     fetchDeckData(deckName);
     setDeckNameInput(deckName);
   }
@@ -16,8 +27,8 @@ export default function DeckListDropdown({ setDeck, setDeckNameInput }) {
       const response = await fetch("http://127.0.0.1:8000/cards");
       const data = await response.json();
 
-      const deck = data.find((deck) => deck.deckName === deckName);
-      setDeck(deck.cards);
+      const deck = data.find((deck) => deck.name === deckName);
+      setDeck(deck);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -27,10 +38,11 @@ export default function DeckListDropdown({ setDeck, setDeckNameInput }) {
     fetch("http://127.0.0.1:8000/cards")
       .then((response) => response.json())
       .then((data) => {
-        const names = data.map((deck) => deck.deckName);
+        const names = data.map((deck) => deck.name);
         setDecksList(names);
+        setDropdownValue(deckName);
       });
-  }, []);
+  }, [toggle]);
 
   return (
     <>
