@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import Tooltip from "./Tooltip";
 import cardInfoHashmap from "../assets/card-info-hashmap.json";
+import {CardInfoContext} from "../pages/ViewDecksPage";
 
 export default function Card({
   name,
@@ -8,11 +9,15 @@ export default function Card({
   removeCard,
   count,
   isSmall,
+  isViewDecksPage = false,
   isCardsPage = false,
   children,
 }) {
   const cardName = name;
   const cardInfo = cardInfoHashmap[cardName];
+  
+  // ViewDecksPage Context
+  const setDisplayedCard = useContext(CardInfoContext);
 
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [showTooltip, setShowTooltip] = useState(false);
@@ -73,7 +78,7 @@ export default function Card({
   return (
     <div className="card">
       <img
-        onMouseEnter={() => setShowTooltip(true)}
+        onMouseEnter={() => {setShowTooltip(true); setDisplayedCard(cardInfo)}}
         onMouseLeave={() => setShowTooltip(false)}
         ref={cardRef}
         src={`http://localhost:3000/cards/image/${cardName}`}
@@ -85,16 +90,19 @@ export default function Card({
         }}
       />
 
-      <Tooltip
-        position={tooltipPosition}
-        show={showTooltip}
-        cardInfo={cardInfo}
-      >
-        <img
-          src={`http://localhost:3000/cards/image/${cardName}`}
-          alt={cardName}
-        />
-      </Tooltip>
+      {!isViewDecksPage && (
+        <Tooltip
+          position={tooltipPosition}
+          show={showTooltip}
+          cardInfo={cardInfo}
+        >
+          <img
+            src={`http://localhost:3000/cards/image/${cardName}`}
+            alt={cardName}
+          />
+        </Tooltip>
+      )}
+
       {isSmall && (
         <div>
           <div className="card-overlay__button">{count}x</div>

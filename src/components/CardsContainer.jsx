@@ -1,6 +1,6 @@
 import Card from "./Card";
 
-export default function CardsContainer({ deck, addCard, removeCard, type }) {
+export default function CardsContainer({ deck, addCard, removeCard, type, isViewDecksPage }) {
   return (
     <div className="cards-container cards-container--small">
       {deck &&
@@ -12,6 +12,7 @@ export default function CardsContainer({ deck, addCard, removeCard, type }) {
             removeCard={removeCard}
             count={card.count}
             isSmall={true}
+            isViewDecksPage={isViewDecksPage}
           />
         ))}
     </div>

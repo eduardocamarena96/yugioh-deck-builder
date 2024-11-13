@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
+import { useLocation } from "react-router-dom";
 
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
@@ -8,12 +9,21 @@ import DeckEditingOptions from "../components/DeckEditingOptions";
 import getDeckType from "../helpers/get-deck-type-helper";
 
 export default function EditDeckPage() {
-  const [deck, setDeck] = useState({
-    name: "",
-    main: [],
-    extra: [],
-    side: [],
-  });
+  const location = useLocation();
+  console.log("location:", location);
+  const data = location.state;
+  console.log("data:", data);
+
+  const [deck, setDeck] = useState(
+    data
+      ? data
+      : {
+          name: "",
+          main: [],
+          extra: [],
+          side: [],
+        }
+  );
 
   const [input, setInput] = useState("");
   const cardsContainerRef = useRef(null);

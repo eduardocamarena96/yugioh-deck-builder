@@ -2,7 +2,7 @@ import CardsContainer from "./CardsContainer";
 
 import cardInfoHashmap from "../assets/card-info-hashmap.json";
 
-export default function DeckContainer({ deck, addCard, removeCard, type }) {
+export default function DeckContainer({ deck, addCard, removeCard, type, isViewDecksPage }) {
   const deckSize = deck[type].reduce(
     (accumulator, card) => accumulator + card.count,
     0
@@ -57,6 +57,7 @@ export default function DeckContainer({ deck, addCard, removeCard, type }) {
         addCard={addCard}
         removeCard={removeCard}
         type={type}
+        isViewDecksPage={isViewDecksPage}
       />
     </div>
   );

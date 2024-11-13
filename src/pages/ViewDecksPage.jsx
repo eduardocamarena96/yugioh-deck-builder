@@ -1,291 +1,83 @@
 import Header from "../components/Header";
 import DeckContainer from "../components/DeckContainer";
+import { useState, useEffect, createContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+export const CardInfoContext = createContext();
 
 export default function ViewDecksPage() {
+  const [deck, setDeck] = useState({
+    name: "Untitled",
+    main: [],
+    extra: [],
+    side: [],
+  });
+
+  const navigate = useNavigate();
+  const [displayedCard, setdisplayedCard] = useState({ name: "dark magician" });
+  console.log(displayedCard);
+
+  useEffect(() => {
+    async function getDeck(deckName) {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/cards`);
+        const data = await response.json();
+
+        console.log(data);
+        const deck = data.find((deck) => deck.name === deckName);
+        setDeck(deck);
+        setdisplayedCard(deck.main[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getDeck("size");
+  }, []);
+
+  const handleClick = () => {
+    navigate("/edit", { state: deck });
+  };
+
   return (
-    <>
+    <CardInfoContext.Provider value={setdisplayedCard}>
       <Header />
       <div className="view-deck-container">
         <div className="card-view">
           <img
             className="card-view__card-img"
-            src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
+            src={`http://localhost:3000/cards/image/${displayedCard.name.replace(
+              ":",
+              ""
+            )}`}
           />
-          <p>[Zombie / Effect]</p>
-          <p>
-            You can send this card and 1 Spell/Trap from your hand to the GY,
-            then target 1 card on the field; send it to the GY. If this card is
-            in your GY: You can send 1 Spell/Trap you control to the
-            GY; add this card to your hand, then you can Special
-            Summon 1 Zombie monster from your hand, and if you do, until the end
-            of your opponent's turn, it gains 1000 ATK/DEF and cannot
-            be destroyed by card effects. You can only use each effect of
-            "Eldlich the Golden Lord" once per turn.
-          </p>
+          <p>{displayedCard.name}</p>
+          <p>{`${
+            displayedCard.typeline
+              ? `[${displayedCard.typeline.join(" / ")}]`
+              : ``
+          }`}</p>
+          <p>{displayedCard.desc}</p>
         </div>
 
         <div className="deck-list-view">
-
-            <div className="deck-list-view-options">
-                <p className="deck-list-view-options__deck-name">Viewing: Deck Name</p>
-                <button>Edit</button>
-            </div>
-
-          <div className="deck-container">
-            <div className="deck-type-header">
-              <p className="deck-type-header__title">Main</p>
-              <div className="deck-type-header__deck-count">
-                <p>40</p>
-              </div>
-              <p className="deck-type-header__card-type-count">
-                (0 Monster | 0 Spell | 0 Trap)
-              </p>
-            </div>
-
-            <div className="cards-container cards-container--small">
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-
-              <img
-                className="card-view__card-img"
-                src="/src/assets/cards/Eldlich the Golden Lord_Zombie_Effect Monster_lvl10_LIGHT.jpg"
-              />
-            </div>
+          <div className="deck-list-view-options">
+            <p className="deck-list-view-options__deck-name">
+              Viewing: <span>{deck.name}</span>
+            </p>
+            <button
+              onClick={handleClick}
+              className="deck-list-view-options__edit-button"
+            >
+              Edit
+            </button>
           </div>
+
+          <DeckContainer deck={deck} type="main" isViewDecksPage={true} />
+          <DeckContainer deck={deck} type="extra" isViewDecksPage={true} />
+          <DeckContainer deck={deck} type="side" isViewDecksPage={true} />
         </div>
       </div>
-    </>
+    </CardInfoContext.Provider>
   );
 }

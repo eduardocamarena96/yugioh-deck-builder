@@ -46,10 +46,10 @@ export default function TopCards({
       }
     };
 
-    cardsContainerRef.current.addEventListener("scroll", handleScroll);
+    cardsContainerRef.current?.addEventListener("scroll", handleScroll);
 
     return () => {
-      cardsContainerRef.current.removeEventListener("scroll", handleScroll);
+      cardsContainerRef.current?.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
