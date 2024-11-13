@@ -397,6 +397,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  width: 50%;
   max-width: 48rem;
   font-size: 1.6rem;
   padding: 1.6rem;
@@ -435,4 +436,64 @@ body {
 /* Toast styles */
 .Toastify__toast-theme--dark {
   background-color: #262631;
+}
+
+/* List Decks Page */
+
+.decklist-container {
+  padding: 1.6rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); 
+  gap: 1.6rem;
+  border-top: 1px solid #262631;
+}
+
+.deck-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  /* width: 40rem; */
+  height: 30rem;
+  padding: 1.6rem;
+  /* background-color: pink; */
+  border: 1px solid #262631;
+  border-radius: 0.8rem;
+}
+
+.deck-tile:hover {
+  border: 1px solid hsl(240, 13%, 37%);
+  cursor: pointer;
+}
+
+.deck-tile-card-images-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+
+.deck-tile__card-image {
+  width: 12rem;
+}
+
+.deck-tile__view-button {
+  font-size: 2rem;
+  border-radius: 4px;
+  background-color: #0e0e11;
+  color: white;
+  border: 1px solid #262631;
+  padding: 0.8rem 1.6rem;
+}
+
+.deck-tile-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.deck-tile-info__deck-name {
+  font-size: 2rem;
+}
+
+.deck-tile-info-options {
+  display: flex;
+
 }

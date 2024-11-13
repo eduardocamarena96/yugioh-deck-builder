@@ -13,10 +13,13 @@ export default function Header() {
           Yugioh Deck Builder
         </NavLink>
         <NavLink to="/" className={getActiveClass} end>
-          Home{" "}
+          Home
         </NavLink>
         <NavLink to="/decks" className={getActiveClass} end>
-          My Decks{" "}
+          My Decks
+        </NavLink>
+        <NavLink to="/view" className={getActiveClass} end>
+          View Deck
         </NavLink>
         <NavLink to="/edit" className={getActiveClass} end>
           Edit Deck

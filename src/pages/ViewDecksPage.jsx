@@ -2,11 +2,17 @@ import Header from "../components/Header";
 import DeckContainer from "../components/DeckContainer";
 import { useState, useEffect, createContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+import cardInfoHashmap from "../assets/card-info-hashmap.json";
 
 export const CardInfoContext = createContext();
 
 export default function ViewDecksPage() {
-  const [deck, setDeck] = useState({
+  const location = useLocation();
+  const data = location.state;
+
+  const [deck, setDeck] = useState(data ? data : {
     name: "Untitled",
     main: [],
     extra: [],
@@ -14,7 +20,7 @@ export default function ViewDecksPage() {
   });
 
   const navigate = useNavigate();
-  const [displayedCard, setdisplayedCard] = useState({ name: "dark magician" });
+  const [displayedCard, setdisplayedCard] = useState(data ? cardInfoHashmap[data.main[0].name] : cardInfoHashmap["dark magician"]);
   console.log(displayedCard);
 
   useEffect(() => {
@@ -32,10 +38,10 @@ export default function ViewDecksPage() {
       }
     }
 
-    getDeck("size");
+    // getDeck("size");
   }, []);
 
-  const handleClick = () => {
+  const handleEditClick = () => {
     navigate("/edit", { state: deck });
   };
 
@@ -66,7 +72,7 @@ export default function ViewDecksPage() {
               Viewing: <span>{deck.name}</span>
             </p>
             <button
-              onClick={handleClick}
+              onClick={handleEditClick}
               className="deck-list-view-options__edit-button"
             >
               Edit
